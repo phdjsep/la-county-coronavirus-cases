@@ -6,4 +6,5 @@ The LA County Public Health office posts the counts of coronavirus cases in both
 ## Rough architecture
 
 **data/** - each days data will end up in this folder with the date prepended to the type of case counts
+
 **la-county-cov-cases/** - this is the shiny app and also where the data scrape and clean script resides. Writing to data when it's complete.
