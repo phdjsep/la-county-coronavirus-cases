@@ -10,16 +10,14 @@ runtime: shiny
 ```{r setup, include=FALSE}
 library(flexdashboard)
 library(readr)
-library(here)
 library(ggplot2)
 library(plotly)
 
 # load data in 'global' chunk so it can be shared by all users of the dashboard
-total_merge <- read_rds(path = here::here("data/merged/", "total-merged.rds"))
-age_merge <- read_rds(path = here::here("data/merged/", "age-merged.rds"))
-# death_merge <- read_rds(path = here::here("data/merged/", "death-merged.rds"))
-community_merge <- read_rds(path = here::here("data/merged/", "community-merged.rds"))
-
+total_merge <- read_rds(path = "data/merged/total-merged.rds")
+age_merge <- read_rds(path = "data/merged/age-merged.rds")
+death_merge <- read_rds(path = "data/merged/death-merged.rds")
+total_merge <- read_rds(path = "data/merged/community-merged.rds")
 ```
 
 Column {.sidebar}
@@ -65,7 +63,7 @@ p <- ggplot(total_merge, aes(x = case_date, y = total_cases, group = locations, 
             geom_line() + 
             geom_point()
 ggplotly(p, tooltip = c("total_cases", "case_date")) %>% 
-   layout(legend = list(x = 0, y = 1))
+   layout(legend = list(x = 0, y = 1, bgcolor = "rgba(0,0,0,0)"))
 ```
 
 ### Laboratory Confirmed Cases of Coronavirus by Age Group (median age 47)
@@ -75,7 +73,7 @@ p <- ggplot(age_merge, aes(x = case_date, y = total_cases, group = locations, co
     geom_line() +
     geom_point()
 ggplotly(p, tooltip = c("total_cases", "case_date")) %>% 
-   layout(legend = list(x = 0, y = 1))
+   layout(legend = list(x = 0, y = 1, bgcolor = "rgba(0,0,0,0)"))
 ```
 
 Row
@@ -89,6 +87,6 @@ p <- ggplot(filter(community_merge, locations == input$community), aes(x = case_
             geom_line() +
             geom_point()
 ggplotly(p) %>% 
-   layout(legend = list(x = 0, y = 1))
+   layout(legend = list(x = 0, y = 1, bgcolor = "rgba(0,0,0,0)"))
 })
 ```
