@@ -5,6 +5,6 @@ account: sep-dadsetan
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1995958
-bundleId: 2924510
+bundleId: 2924525
 url: https://sep-dadsetan.shinyapps.io/la-county-cov-cases/
-when: 1585169611.6473
+when: 1585169818.81747

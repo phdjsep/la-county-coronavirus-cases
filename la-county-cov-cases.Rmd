@@ -17,7 +17,7 @@ library(plotly)
 total_merge <- read_rds(path = "data/merged/total-merged.rds")
 age_merge <- read_rds(path = "data/merged/age-merged.rds")
 death_merge <- read_rds(path = "data/merged/death-merged.rds")
-total_merge <- read_rds(path = "data/merged/community-merged.rds")
+community_merge <- read_rds(path = "data/merged/community-merged.rds")
 ```
 
 Column {.sidebar}
