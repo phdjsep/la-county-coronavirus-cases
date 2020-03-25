@@ -1,0 +1,94 @@
+---
+title: "LA County Coronavirus Cases"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(readr)
+library(here)
+library(ggplot2)
+library(plotly)
+
+# load data in 'global' chunk so it can be shared by all users of the dashboard
+total_merge <- read_rds(path = here::here("data/merged/", "total-merged.rds"))
+age_merge <- read_rds(path = here::here("data/merged/", "age-merged.rds"))
+# death_merge <- read_rds(path = here::here("data/merged/", "death-merged.rds"))
+community_merge <- read_rds(path = here::here("data/merged/", "community-merged.rds"))
+
+```
+
+Column {.sidebar}
+-----------------------------------------------------------------------
+
+```{r}
+selectInput("community", h3("Choose Community"), 
+                        choices = community_merge$locations, selected = 1)
+```
+
+Source: LA County Public Health Dept.
+
+Row
+-----------------------------------------------------------------------
+
+### Total Cases
+
+```{r}
+# Emit the download rate
+valueBox(max(total_merge$total_cases), 
+         caption = "Total Cases", 
+         icon = 'fa-ambulance',
+         color = 'warning')
+```
+
+### Total Deaths
+
+```{r}
+# Emit the download rate
+valueBox(11, 
+         caption = "Total Deaths", 
+         icon = 'fa-heart',
+         color = 'danger')
+```
+
+Row
+-----------------------------------------------------------------------
+
+### Laboratory Confirmed Cases of Coronavirus by Location
+
+```{r}
+p <- ggplot(total_merge, aes(x = case_date, y = total_cases, group = locations, color = locations)) + 
+            geom_line() + 
+            geom_point()
+ggplotly(p, tooltip = c("total_cases", "case_date")) %>% 
+   layout(legend = list(x = 0, y = 1))
+```
+
+### Laboratory Confirmed Cases of Coronavirus by Age Group (median age 47)
+
+```{r}
+p <- ggplot(age_merge, aes(x = case_date, y = total_cases, group = locations, color = locations)) +
+    geom_line() +
+    geom_point()
+ggplotly(p, tooltip = c("total_cases", "case_date")) %>% 
+   layout(legend = list(x = 0, y = 1))
+```
+
+Row
+-----------------------------------------------------------------------
+
+### Laboratory Confirmed Cases of Coronavirus by Community
+
+```{r}
+renderPlotly({
+p <- ggplot(filter(community_merge, locations == input$community), aes(x = case_date, y = total_cases, group = locations, color = locations)) +
+            geom_line() +
+            geom_point()
+ggplotly(p) %>% 
+   layout(legend = list(x = 0, y = 1))
+})
+```
