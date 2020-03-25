@@ -15,7 +15,7 @@ multmerge <- function(mypath) {
 # Let's merge the data we gather each day
 total_merge <- multmerge(here::here("data/total"))
 age_merge <- multmerge(here::here("data/age"))
-death_merge <- multmerge(here::here("data/death"))
+death_merge <- multmerge(here::here("data/deaths"))
 community_merge <- multmerge(here::here("data/community"))
 
 # Grab latest date from data

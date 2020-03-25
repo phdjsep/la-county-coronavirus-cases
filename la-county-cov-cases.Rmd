@@ -9,6 +9,7 @@ runtime: shiny
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
+library()
 library(readr)
 library(ggplot2)
 library(plotly)
@@ -28,7 +29,11 @@ selectInput("community", h3("Choose Community"),
                         choices = community_merge$locations, selected = 1)
 ```
 
-Source: LA County Public Health Dept.
+Last Updated: `r max(total_merge$case_date)`
+
+Source: [LA County Public Health Dept](http://www.publichealth.lacounty.gov/media/Coronavirus/locations.htm)
+
+Made by: [Sep Dadsetan](https://www.linkedin.com/in/sepdadsetan)
 
 Row
 -----------------------------------------------------------------------
@@ -36,18 +41,42 @@ Row
 ### Total Cases
 
 ```{r}
-# Emit the download rate
+# Total Case Value Box
 valueBox(max(total_merge$total_cases), 
          caption = "Total Cases", 
-         icon = 'fa-ambulance',
+         icon = 'fa-medkit',
+         color = 'warning')
+```
+
+### Total Hospitalized
+
+```{r}
+# extract latest hospitalized count
+hospitalized_count <- death_merge %>% 
+  group_by(locations) %>% 
+  top_n(1, total_cases) %>% 
+  pull(total_cases) %>% 
+  max()
+
+# Total Hospitalized Value Box
+valueBox(hospitalized_count, 
+         caption = "Total Hospitalized", 
+         icon = 'fa-hospital',
          color = 'warning')
 ```
 
 ### Total Deaths
 
 ```{r}
-# Emit the download rate
-valueBox(11, 
+# extract latest death count
+death_count <- death_merge %>% 
+  group_by(locations) %>% 
+  top_n(1, total_cases) %>% 
+  pull(total_cases) %>% 
+  min()
+
+# Total Death Value Box
+valueBox(death_count, 
          caption = "Total Deaths", 
          icon = 'fa-heart',
          color = 'danger')
