@@ -46,7 +46,7 @@ age_case_numbers <- slice(cases_table, 7:10)
 death_numbers <- slice(cases_table, 13:14)
 
 # Grab cases by community and convert column to int
-community_case_numbers <- slice(cases_table, 19:nrow(cases_table)) 
+community_case_numbers <- slice(cases_table, 17:nrow(cases_table)) 
 
 # Write data
 write_rds(total_case_numbers, path = here::here("data/total/", paste(date_string, "total-case-numbers.rds", sep = "-")))

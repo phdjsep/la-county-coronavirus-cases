@@ -9,7 +9,7 @@ runtime: shiny
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
-library()
+library(dplyr)
 library(readr)
 library(ggplot2)
 library(plotly)
@@ -25,13 +25,22 @@ Column {.sidebar}
 -----------------------------------------------------------------------
 
 ```{r}
-selectInput("community", h3("Choose Community"), 
-                        choices = community_merge$locations, selected = 1)
+selectInput("community", 
+            h4("Choose Community"), 
+            choices = community_merge$locations, 
+            selected = "Alhambra",
+            multiple = T)
 ```
+
+**Please use the community selector above to view your communities of interest in the third graph.**
+
+The LA County Public Health office posts the counts of coronavirus cases in both total and by community each day. The goal of this dashboard is to capture their data on a daily basis so that we can visualize a daily trend in total and across communities.
 
 Last Updated: `r max(total_merge$case_date)`
 
-Source: [LA County Public Health Dept](http://www.publichealth.lacounty.gov/media/Coronavirus/locations.htm)
+Data Source: [LA County Public Health Dept](http://www.publichealth.lacounty.gov/media/Coronavirus/locations.htm)
+
+Code: [Github](https://github.com/phdjsep/la-county-coronavirus-cases)
 
 Made by: [Sep Dadsetan](https://www.linkedin.com/in/sepdadsetan)
 
@@ -112,7 +121,7 @@ Row
 
 ```{r}
 renderPlotly({
-p <- ggplot(filter(community_merge, locations == input$community), aes(x = case_date, y = total_cases, group = locations, color = locations)) +
+p <- ggplot(filter(community_merge, locations %in% input$community), aes(x = case_date, y = total_cases, group = locations, color = locations)) +
             geom_line() +
             geom_point()
 ggplotly(p) %>% 
