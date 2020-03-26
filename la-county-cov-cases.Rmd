@@ -97,7 +97,7 @@ ggplotly(p, tooltip = c("total_cases", "case_date")) %>%
    layout(legend = list(x = 0, y = 1, bgcolor = "rgba(0,0,0,0)"))
 ```
 
-### Laboratory Confirmed Cases of Coronavirus by Age Group (median age 47)
+### Laboratory Confirmed Cases of Coronavirus by Age Group
 
 ```{r}
 p <- ggplot(age_merge, aes(x = case_date, y = total_cases, group = locations, color = locations)) +
