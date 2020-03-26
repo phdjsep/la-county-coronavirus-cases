@@ -18,6 +18,7 @@ library(plotly)
 total_merge <- read_rds(path = "data/merged/total-merged.rds")
 age_merge <- read_rds(path = "data/merged/age-merged.rds")
 death_merge <- read_rds(path = "data/merged/death-merged.rds")
+hospitalization_merge <- read_rds(path = "data/merged/hospitalization-merged.rds")
 community_merge <- read_rds(path = "data/merged/community-merged.rds")
 ```
 
@@ -60,15 +61,8 @@ valueBox(max(total_merge$total_cases),
 ### Total Hospitalized
 
 ```{r}
-# extract latest hospitalized count
-hospitalized_count <- death_merge %>% 
-  group_by(locations) %>% 
-  top_n(1, total_cases) %>% 
-  pull(total_cases) %>% 
-  max()
-
 # Total Hospitalized Value Box
-valueBox(hospitalized_count, 
+valueBox(max(hospitalization_merge$total_cases), 
          caption = "Total Hospitalized", 
          icon = 'fa-hospital',
          color = 'warning')
@@ -79,10 +73,9 @@ valueBox(hospitalized_count,
 ```{r}
 # extract latest death count
 death_count <- death_merge %>% 
-  group_by(locations) %>% 
-  top_n(1, total_cases) %>% 
+  filter(locations == "Deaths") %>% 
   pull(total_cases) %>% 
-  min()
+  max()
 
 # Total Death Value Box
 valueBox(death_count, 
