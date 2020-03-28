@@ -12,7 +12,7 @@ cases_html <- read_html("http://www.publichealth.lacounty.gov/media/Coronavirus/
 
 # grab date of update
 date_string <- cases_html %>% 
-  rvest::html_nodes(css = "small") %>% 
+  rvest::html_node(css = "p#dte") %>% 
   rvest::html_text(trim = T) %>% 
   str_replace(pattern = "[\n\r\t]+", replacement = "") %>% 
   str_extract(pattern = "\\d+/\\d+") %>% 
