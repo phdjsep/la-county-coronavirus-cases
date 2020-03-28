@@ -1,6 +1,6 @@
 # la-county-coronavirus-cases
 
-## Update: LA County has now published its own dashboards (here)[http://covid19.lacounty.gov/dashboards/] so I've archived this project.
+## Update: LA County has now published its own dashboards [here](http://covid19.lacounty.gov/dashboards/) so I've archived this project.
 
 A dashboard to track case counts provided by LA County Public Health Office
 
